@@ -8,4 +8,4 @@ app-web:
 app-db:
   build: ./db
   ports:
-    - "5432:5432"
+    - "5433:5432"

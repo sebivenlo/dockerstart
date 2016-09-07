@@ -15,7 +15,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "helloWorld", eager = true)
 @SessionScoped
 public class HelloWorld implements Serializable {
-    private static final String DB_HOST = "192.168.99.100";
+    private static final String DB_HOST = "app-db_1";
     private static final int DB_PORT = 5432;
     private static final String DB_NAME = "docker";
     private static final String DB_USER = "docker";

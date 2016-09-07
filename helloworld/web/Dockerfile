@@ -1,4 +1,4 @@
 FROM jboss/wildfly
-MAINTAINER Eric
+MAINTAINER EricSoldierer
 
 ADD helloworld.war /opt/jboss/wildfly/standalone/deployments/

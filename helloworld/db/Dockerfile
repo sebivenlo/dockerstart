@@ -1,4 +1,4 @@
 FROM postgres:9.5
-MAINTAINER Eric
+MAINTAINER EricSoldierer
 
 ADD init.sql /docker-entrypoint-initdb.d/
