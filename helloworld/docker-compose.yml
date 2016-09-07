@@ -1,0 +1,11 @@
+app-web:
+  build: ./web
+  ports:
+    - "8011:8080"
+  links:
+    - app-db
+
+app-db:
+  build: ./db
+  ports:
+    - "5432:5432"
