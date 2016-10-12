@@ -10,8 +10,8 @@ homberghp: Please build war yourselves. It does not belong in a repository anywa
 This section describes how you can start your docker machine on different operating systems.
 
 ## Linux
-Somehow, things under Linux are a bit harder, mostly because linux does not a virtual machine layer.
-Anyhow, on my machine, the docker0 ip address in 172.17.0.1, so everywhere where yo o see DOCKER_HOST read  172.17.0.1.
+Somehow, things under Linux are a bit harder, mostly because linux does not have a virtual machine layer.
+Anyhow, on my machine, the docker0 ip address is 172.17.0.1.
 
 ## Windows
 
@@ -22,19 +22,10 @@ docker-machine start
 eval $(docker-machine env)
 ```
 
-# Docker Compose to Link Containers
-This `helloworld` application consists of two containers. One representing the database, and the other the application server. To start up both of them, execute the following command in the folder where the `docker-compose.yml` file is located.
-
-```bash
-docker-compose up -d
-```
-
-Now, you should be able to connect to the Wildfy server via `http://192.168.99.100:8011` in your browser.
-
 # IP address of Docker Machine
-The IP address as well as how you establish a connection to the docker-machine depends on how you installed and/or configured docker on your machine. On some machines the docker machine can be accessed under `http://localhost:port`.
+The IP address as well as how you establish a connection to the docker-machine depends on how you installed and/or configured docker on your machine. On some machines the docker machine can be accessed under `http://localhost:port`. On macOS the default IP address is 192.168.99.100.
 
-An alias for this IP address can be configured by adding an entry in the `hosts` configuration.
+To mitigate this issue and to achieve consistency across sebivenlo projects, a convention has to be created. This is being done by creating an alias for the IP address of the docker machine. This can be configured by adding an entry in the `hosts` configuration.
 
 For Unix this is done by append this to the `/etc/hosts` file:
 
@@ -42,7 +33,20 @@ For Unix this is done by append this to the `/etc/hosts` file:
 192.168.99.100 docker
 ```
 
+On Windows this file is located here: `C:\Windows\System32\Drivers\etc\hosts`
+
 Afterwards, the docker machine can be accessed under `http://docker:port`.
+
+# Docker Compose to Link Containers
+This `helloworld` application consists of two containers. One representing the database, and the other the application server. To start up both of them, execute the following command in the folder where the `docker-compose.yml` file is located.
+
+```bash
+docker-compose up -d
+```
+
+Now, you should be able to connect to the Wildfy server via `http://docker:8011` in your browser.
+
+
 
 # Wildfly and Maven
 When you develop an application that is supposed to run on a server, you will somehow have to deploy it. While manual deployment is possible, it is very time consuming. Luckily, Maven can assist us with this process.
@@ -151,12 +155,12 @@ Then in the file
 
 add or change the line
 
-`DOCKER_OPTS="-H tcp://127.0.0.1:2375"`
+`DOCKER_OPTS="-H tcp://docker:2375"`
 
 
 lastly, in your `~/.bashrc`, add
 
-`export DOCKER_HOST=tcp://127.0.0.1:2375`
+`export DOCKER_HOST=tcp://docker:2375`
 
 This allows to connect and command docker from both services, one being the netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket which netbeans cannot connect to.
 
