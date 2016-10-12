@@ -78,7 +78,9 @@ The command for this is:
 `dockerd -H tcp://127.0.0.1`
 
 If you encounter problems doing this, such as:
-`FATA[0000] Error starting daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid ` 
+
+`FATA[0000] Error starting daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid`
+
 you will have to stop the current docker service.
 
 to do this, type:
@@ -86,6 +88,8 @@ to do this, type:
 `service docker stop`
 
 and try again.
+
+We will see how we can avoid that later on though.
 
 ## Windows and MacOS
 
