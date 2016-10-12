@@ -1,7 +1,7 @@
 # dockerstart
 getting on the same level with docker.
 
-* EricSoldierer added the hello world docker composer app, consisting of a persistence part and a web part.
+* EricSoldierer and paulvv007 added the hello world docker composer app, consisting of a persistence part and a web part.
 * jantrienes and holgerkemper added instructions and configuration of how to deploy the application with Maven to Wildfly.
 
 homberghp: Please build war yourselves. It does not belong in a repository anyway, and you will have a go with maven.
@@ -31,7 +31,18 @@ docker-compose up -d
 
 Now, you should be able to connect to the Wildfy server via `http://192.168.99.100:8011` in your browser.
 
-*Hint: The IP address as well as how you establish a connection to the docker-machine depends on how you installed and/or configured docker on your machine. On some machines the docker machine can be accessed under `http://localhost:port`.*
+# IP address of Docker Machine
+The IP address as well as how you establish a connection to the docker-machine depends on how you installed and/or configured docker on your machine. On some machines the docker machine can be accessed under `http://localhost:port`.
+
+An alias for this IP address can be configured by adding an entry in the `hosts` configuration.
+
+For Unix this is done by append this to the `/etc/hosts` file:
+
+```
+192.168.99.100 docker
+```
+
+Afterwards, the docker machine can be accessed under `http://docker:port`.
 
 # Wildfly and Maven
 When you develop an application that is supposed to run on a server, you will somehow have to deploy it. While manual deployment is possible, it is very time consuming. Luckily, Maven can assist us with this process.
@@ -44,18 +55,26 @@ Following is a brief description of how to setup this plugin, and how to deploy 
 Since the configuration parameter like the ip address, the username and/or the password usually differ from user to user, these parameters should be configured per user. This can be done in the global maven configuration. On Unix, this file is located under `~/.m2/settings.xml`. On Windows it can be found at `%USER_PROFILE%\.m2\settings.xml`.
 
 Add the following configuration to this file:
+
 ```xml
-<profiles>
-  <profile>
-    <id>wildfly-remote</id>
-    <properties>
-      <wildfly-hostname>192.168.99.100</wildfly-hostname>
-      <wildfly-port>9990</wildfly-port>
-      <wildfly-username>admin</wildfly-username>
-      <wildfly-password>Admin#70365</wildfly-password>
-    </properties>
-  </profile>
-</profiles>
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <profiles>
+    <profile>
+      <id>wildfly-remote</id>
+      <properties>      
+        <wildfly-hostname>docker</wildfly-hostname>
+        <wildfly-port>9990</wildfly-port>
+        <wildfly-username>admin</wildfly-username>
+        <wildfly-password>Admin#70365</wildfly-password>
+      </properties>
+    </profile>
+  </profiles>
+
+</settings>
 ```
 
 ## Deploy Application
@@ -65,7 +84,7 @@ After that, you can deploy the helloworld web app to your Wildfly server. Execut
 mvn clean install wildfly:deploy -P wildfly-remote
 ```
 
-Verify the result in your browser: `http://192.168.99.100:8011/helloworld-1.0-SNAPSHOT/`. The result should be something like this:
+Verify the result in your browser: `http://docker:8011/helloworld-1.0-SNAPSHOT/`. The result should be something like this:
 
 ![helloworld-application](helloworld-application.png)
 
