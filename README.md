@@ -40,11 +40,13 @@ for Linux the line could read (and does on ubuntu)
 172.17.0.1 docker
 ```
 
-But since on ubuntu a bridge is configure, you could use local host too.
+But since on ubuntu a bridging network is configure, you could use `localhost` too as the address to visit your application.
 
 On Windows this file is located here: `C:\Windows\System32\Drivers\etc\hosts`
 
 Afterwards, the docker machine can be accessed under `http://docker:port`.
+
+Note that 192.168.0.0/16 and 172.16.0.0/12 are both so called private networks and should not be used on the real internet. It is okay to use them inside a host or on a private net (typically applying NAT).
 
 # Docker Compose to Link Containers
 This `helloworld` application consists of two containers. One representing the database, and the other the application server. To start up both of them, execute the following command in the folder where the `docker-compose.yml` file is located.
