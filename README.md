@@ -69,6 +69,22 @@ Verify the result in your browser: `http://192.168.99.100:8011/helloworld-1.0-SN
 
 # Docker and NetBeans IDE
 
+With Netbeans 8.2, Docker can be found in the "Services"-Tab in the Netbeans navigation-panel. This service allows us to execute docker commands from the netbeans environment. In order to do that, we have some configuration to do.
+
+## Linux
+Netbeans requires a docker daemon to communicate with, that is listening on the tcp-port 2375 on localhost.
+The command for this is:
+
+`dockerd -H tcp://127.0.0.1`
+
+If you encounter problems doing this, such as: `FATA[0000] Error starting daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid ` you will have to stop the current docker service.
+
+to do this, type: `service docker stop`, and try again.
+
+## Windows
+
+## MacOS
+
 After the demo by *MarvinRuesenberg* on how to connect the netbeans docker client, homberghp inverstigated a little further. The following was necessary to get it working on an Ubuntu installation:
 
 In the file `/lib/systemd/system/docker.service` add the line
