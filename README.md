@@ -77,14 +77,33 @@ The command for this is:
 
 `dockerd -H tcp://127.0.0.1`
 
-If you encounter problems doing this, such as: `FATA[0000] Error starting daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid ` you will have to stop the current docker service.
+If you encounter problems doing this, such as:
+`FATA[0000] Error starting daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid ` 
+you will have to stop the current docker service.
 
-to do this, type: `service docker stop`, and try again.
+to do this, type:
 
-## Windows
+`service docker stop`
 
-## MacOS
+and try again.
 
+## Windows and MacOS
+
+When starting the docker-machine on Windows or MacOS, a virtual machine is used. This VM is providing a network address for communication by default.
+
+Since this is the case, there is no need opening additional ports.
+What is to be looked out for is the IP that the API is listening at.
+
+e.G.
+
+`192.168.99.100`
+`192.168.99.101`
+
+When opening the `add Docker` promt in the docker service, there is already a predefined IP + Port entered. Check if the IP is the same that your machine is running on and you will be able to connect to the daemon easily.
+
+# Accessing Docker From Terminal AND Netbeans
+
+## Linux
 After the demo by *MarvinRuesenberg* on how to connect the netbeans docker client, homberghp inverstigated a little further. The following was necessary to get it working on an Ubuntu installation:
 
 In the file `/lib/systemd/system/docker.service` add the line
@@ -114,8 +133,12 @@ lastly, in your `~/.bashrc`, add
 
 `export DOCKER_HOST=tcp://127.0.0.1:2375`
 
-This allows to connect and command docker from both services, one being the setup netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket which netbeans cannot connect to.
+This allows to connect and command docker from both services, one being the netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket which netbeans cannot connect to.
 
 By doing the above, we are opening an actual network tcp-socket that netbeans is able to address.
+
+## Windows and MacOS
+
+This does not have to be done on MacOS and Windows since they are already providing network access via their Virtual Machine.
 
 Enjoy.
