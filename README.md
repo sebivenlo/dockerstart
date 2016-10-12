@@ -10,6 +10,8 @@ homberghp: Please build war yourselves. It does not belong in a repository anywa
 This section describes how you can start your docker machine on different operating systems.
 
 ## Linux
+Somehow, things under Linux are a bit harder, mostly because linux does not a virtual machine layer.
+Anyhow, on my machine, the docker0 ip address in 172.17.0.1, so everywhere where yo o see DOCKER_HOST read  172.17.0.1.
 
 ## Windows
 
