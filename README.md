@@ -11,7 +11,7 @@ This section describes how you can start your docker machine on different operat
 
 ## Linux
 Somehow, things under Linux are a bit harder, mostly because linux does not a virtual machine layer.
-Anyhow, on my machine, the docker0 ip address in 172.17.0.1, so everywhere where yo o see DOCKER_HOST read  172.17.0.1.
+Anyhow, on my machine, the docker0 ip address in 172.17.0.1, so everywhere where yo o see DOCKER_HOST read  172.17.0.1 when you are on linux.
 
 ## Windows
 
@@ -29,7 +29,7 @@ This `helloworld` application consists of two containers. One representing the d
 docker-compose up -d
 ```
 
-Now, you should be able to connect to the Wildfy server via `http://192.168.99.100:8011` in your browser.
+Now, you should be able to connect to the Wildfy server via `http://${DOCKER_HOST}:8011` in your browser.
 
 *Hint: The IP address as well as how you establish a connection to the docker-machine depends on how you installed and/or configured docker on your machine. On some machines the docker machine can be accessed under `http://localhost:port`.*
 
