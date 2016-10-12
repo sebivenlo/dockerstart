@@ -98,4 +98,8 @@ lastly, in your `~/.bashrc`, add
 
 `export DOCKER_HOST=tcp://127.0.0.1:2375`
 
+This allows to connect and command docker from both services, one being the setup netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket which netbeans cannot connect to.
+
+By doing the above, we are opening an actual network tcp-socket that netbeans is able to address.
+
 Enjoy.
