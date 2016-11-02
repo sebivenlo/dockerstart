@@ -12,7 +12,7 @@ This section describes how you can start your docker machine on different operat
 ## Linux
 
 Somehow, things under Linux are a bit harder, mostly because linux does not a virtual machine layer.
-Anyhow, on my machine, the docker0 ip address in 172.17.0.1, jantrienes and holgerkemper sugested to resolve this in the `hosts` file, see below.
+Anyhow, on my machine, the docker0 ip address in 172.17.0.1, jantrienes and holgerkemper suggested to resolve this in the `hosts` file, see below.
 
 ## Windows
 
