@@ -143,7 +143,7 @@ When opening the `add Docker` promt in the docker service, there is already a pr
 # Accessing Docker From Terminal AND Netbeans
 
 ## Linux
-After the demo by *MarvinRuesenberg* on how to connect the netbeans docker client, homberghp inverstigated a little further. The following was necessary to get it working on an Ubuntu installation:
+After the demo by *MarvinRuesenberg* on how to connect the netbeans docker client, homberghp investigated a little further. The following was necessary to get it working on an Ubuntu installation:
 
 In the file `/lib/systemd/system/docker.service` add the line
 
