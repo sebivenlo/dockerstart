@@ -40,7 +40,7 @@ for Linux the line could read (and does on ubuntu)
 172.17.0.1 docker
 ```
 
-But since on ubuntu a bridging network is configure, you could use `localhost` too as the address to visit your application.
+But since on ubuntu a bridging network is configured, you could use `localhost` too as the address to visit your application.
 
 On Windows this file is located here: `C:\Windows\System32\Drivers\etc\hosts`
 
