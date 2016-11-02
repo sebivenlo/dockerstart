@@ -1,10 +1,11 @@
 # dockerstart
 getting on the same level with docker.
 
-* EricSoldierer and paulvv007 added the hello world docker composer app, consisting of a persistence part and a web part.
-* jantrienes and holgerkemper added instructions and configuration of how to deploy the application with Maven to Wildfly.
+* [EricSoldierer](https://github.com/EricSoldierer) and [paulvv007](https://github.com/paulvv007)  added the hello world docker composer app, consisting of a persistence part and a web part.
+* [jantrienes](https://github.com/jantrienes) and [holgerkemper](https://github.com/holgerkemper) added instructions and configuration of how to deploy the application with Maven to Wildfly.
+* [MarvinRuesenberg](https://github.com/MarvinRuesenberg) added instructions on how you  connect Netbeans with your Docker machine.
 
-homberghp: Please build war yourselves. It does not belong in a repository anyway, and you will have a go with maven.
+[homberghp](https://github.com/homberghp): Please build war yourselves. It does not belong in a repository anyway, and you will have a go with maven.
 
 # Start Docker Machine
 This section describes how you can start your docker machine on different operating systems.
@@ -12,7 +13,7 @@ This section describes how you can start your docker machine on different operat
 ## Linux
 
 Somehow, things under Linux are a bit harder, mostly because linux does not a virtual machine layer.
-Anyhow, on my machine, the docker0 ip address in 172.17.0.1, jantrienes and holgerkemper suggested to resolve this in the `hosts` file, see below.
+Anyhow, on my machine, the docker0 ip address in 172.17.0.1, one can resolve this in the `hosts` file, see below.
 
 ## Windows
 
@@ -143,7 +144,8 @@ When opening the `add Docker` promt in the docker service, there is already a pr
 # Accessing Docker From Terminal AND Netbeans
 
 ## Linux
-After the demo by *MarvinRuesenberg* on how to connect the netbeans docker client, homberghp investigated a little further. The following was necessary to get it working on an Ubuntu installation:
+
+After the demo by MarvinRuesenberg on how to connect the netbeans docker client, homberghp investigated a little further. The following was necessary to get it working on an Ubuntu installation:
 
 In the file `/lib/systemd/system/docker.service` add the line
 
