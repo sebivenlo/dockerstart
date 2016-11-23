@@ -182,4 +182,8 @@ By doing the above, we are opening an actual network tcp-socket that netbeans is
 
 This does not have to be done on MacOS and Windows since they are already providing network access via their Virtual Machine.
 
+# Docker Cheat Sheets
+* Basic (used in [Jenkins Workshop](https://github.com/sebivenlo/jenkins)): https://sebivenlo.github.io/jenkins/docker-cheat-sheet/docker-cheat-sheet.html
+* Very comprehensive: https://github.com/wsargent/docker-cheat-sheet
+
 Enjoy.
