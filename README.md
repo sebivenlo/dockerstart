@@ -99,7 +99,7 @@ After that, you can deploy the helloworld web app to your Wildfly server. Execut
 mvn clean install wildfly:deploy -P wildfly-remote
 ```
 
-Verify the result in your browser: `http://docker:8011/helloworld-1.0-SNAPSHOT/`. The result should be something like this:
+Verify the result in your browser: `http://docker:8011/helloworld/`. The result should be something like this:
 
 ![helloworld-application](helloworld-application.png)
 
