@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4.1209.jre7</version>
+            <version>9.4.1212.jre7</version>
         </dependency>
     </dependencies>
 
@@ -85,17 +85,12 @@
                     <port>${wildfly-port}</port>
                     <username>${wildfly-username}</username>
                     <password>${wildfly-password}</password>
-                    <runtime-name>helloworld.war</runtime-name>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
-                        <!-- 						<phase>package</phase> -->
-                        <!-- 						<goals> -->
-                        <!-- 							<goal>deploy</goal> -->
-                        <!-- 						</goals> -->
                     </execution>
                 </executions>
             </plugin>
