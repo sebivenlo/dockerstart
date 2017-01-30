@@ -147,7 +147,21 @@ When opening the `add Docker` promt in the docker service, there is already a pr
 
 After the demo by MarvinRuesenberg on how to connect the netbeans docker client, homberghp investigated a little further. The following was necessary to get it working on an Ubuntu installation:
 
-In the file `/lib/systemd/system/docker.service` add the line
+In the file
+
+`/etc/default/docker`
+
+add or change the line
+
+`DOCKER_OPTS="-H fd:// -H tcp://docker:2375"`
+
+
+lastly, in your `~/.bashrc`, add
+
+`export DOCKER_HOST=tcp://docker:2375`
+
+
+Then, in the file `/lib/systemd/system/docker.service` add the line
 
 `EnvironmentFile=-/etc/default/docker`
 
@@ -157,22 +171,10 @@ before
 
 and change that last line to
 
-`ExecStart=/usr/bin/dockerd $DOCKER_OPTS -H fd://`
+`ExecStart=/usr/bin/dockerd $DOCKER_OPTS `
 
 (add $DOCKER_OPTS).
 
-Then in the file
-
-`/etc/default/docker`
-
-add or change the line
-
-`DOCKER_OPTS="-H tcp://docker:2375"`
-
-
-lastly, in your `~/.bashrc`, add
-
-`export DOCKER_HOST=tcp://docker:2375`
 
 This allows to connect and command docker from both services, one being the netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket which netbeans cannot connect to.
 
