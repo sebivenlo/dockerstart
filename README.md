@@ -153,32 +153,45 @@ In the file
 
 add or change the line
 
-`DOCKER_OPTS="-H fd:// -H tcp://docker:2375"`
+`DOCKER_OPTS="-H fd:// -H tcp://172.17.0.1:2375 --dns <your-local-dns> --dns 8.8.8.8 --dns 8.8.4.4"`
 
 
 lastly, in your `~/.bashrc`, add
 
-`export DOCKER_HOST=tcp://docker:2375`
+`export DOCKER_HOST=tcp://172.17.0.1:2375`
+
+Create a new directory under `/etc/systemd/system/docker.service.d` with
+
+`mkdir -p etc/systemd/system/docker.service.d` 
+
+and add a file named `overlay.conf` with the contents
+
+`
+[Service]
+# workaround to include default options
+EnvironmentFile=/etc/default/docker   
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -s overlay2 $DOCKER_OPTS
+#ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
+`
+
+This file, because of its location and extension, will be automatically loaded by the _systemd_ system and
+will setup the docker service with tcp connections and the (faster) overlay2 persistense layer driver. Currently overlay2 is the advised driver for docker on ubuntu and tested on xenial. 
+
+Notice that changing the persistence driver from the default (aufs) will make any previous images no longer accessible.
+You may want to op to keep those, by changing the txt `-s overlya2`  to `-s aufs` in the snippet above.
 
 
-Then, in the file `/lib/systemd/system/docker.service` add the line
-
-`EnvironmentFile=-/etc/default/docker`
-
-before
-
-`ExecStart=/usr/bin/dockerd -H fd://`
-
-and change that last line to
-
-`ExecStart=/usr/bin/dockerd $DOCKER_OPTS `
-
-(add $DOCKER_OPTS).
-
-
-This allows to connect and command docker from both services, one being the netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket which netbeans cannot connect to.
+You can connect and command docker from both services, one being the netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket to which Java and hence also NetBeans-IDE cannot connect.
 
 By doing the above, we are opening an actual network tcp-socket that netbeans is able to address.
+
+You can make this a litle more intuitive by adding the line 
+`
+cat 172.17.0.1 	localdocker.local localdocker
+`
+ to your `/etc/hosts` file, which allows you to addres the docker damon with a name. I used to use *docker* as name, but this proved to be awkward, because every time I entered docker into the chrome url box, it tried to connect to my docker instead of to google, which is my intent most of the time.
+
 
 ## Windows and MacOS
 
