@@ -179,7 +179,7 @@ This file, because of its location and extension, will be automatically loaded b
 will setup the docker service with tcp connections and the (faster) overlay2 persistense layer driver. Currently overlay2 is the advised driver for docker on ubuntu and tested on xenial. 
 
 Notice that changing the persistence driver from the default (aufs) will make any previous images no longer accessible.
-You may want to op to keep those, by changing the txt `-s overlya2`  to `-s aufs` in the snippet above.
+You may want to keep those, by changing the text `-s overlay2`  to `-s aufs` in the snippet above.
 
 
 You can connect and command docker from both services, one being the netbeans service, the other one being the commandline interface. By default this is not possible since docker is communicating via an Unix Socket to which Java and hence also NetBeans-IDE cannot connect.
