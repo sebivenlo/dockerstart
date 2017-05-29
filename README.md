@@ -153,10 +153,11 @@ In the file
 
 add or change the line
 
-`DOCKER_OPTS="-H fd:// -H tcp://172.17.0.1:2375 --dns <your-local-dns> --dns 8.8.8.8 --dns 8.8.4.4"`
-
-
-lastly, in your `~/.bashrc`, add
+```
+DOCKER_OPTS="-H fd:// -H tcp://172.17.0.1:2375 --dns <your-local-dns> --dns 8.8.8.8 --dns 8.8.4.4"`
+```
+after changing the test `<your-local-dns>` to the actual dns for you local connections.
+Lastly, in your `~/.bashrc`, add
 
 `export DOCKER_HOST=tcp://172.17.0.1:2375`
 
@@ -171,8 +172,7 @@ and add a file named `overlay.conf` with the contents
 # workaround to include default options
 EnvironmentFile=/etc/default/docker   
 ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -s overlay2 $DOCKER_OPTS
-#ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
+ExecStart=/usr/bin/dockerd $DOCKER_OPTS -s overlay2 
 ```
 
 This file, because of its location and extension, will be automatically loaded by the _systemd_ system and
