@@ -166,14 +166,14 @@ Create a new directory under `/etc/systemd/system/docker.service.d` with
 
 and add a file named `overlay.conf` with the contents
 
-`
+```
 [Service]
 # workaround to include default options
 EnvironmentFile=/etc/default/docker   
 ExecStart=
 ExecStart=/usr/bin/dockerd -H fd:// -s overlay2 $DOCKER_OPTS
 #ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
-`
+```
 
 This file, because of its location and extension, will be automatically loaded by the _systemd_ system and
 will setup the docker service with tcp connections and the (faster) overlay2 persistense layer driver. Currently overlay2 is the advised driver for docker on ubuntu and tested on xenial. 
