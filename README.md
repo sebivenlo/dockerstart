@@ -56,13 +56,13 @@ To mitigate this issue and to achieve consistency across sebivenlo projects, a c
 For Unix (including OSX) this is done by append this to the `/etc/hosts` file:
 
 ```
-192.168.99.100 docker
+192.168.99.100 localdocker
 ```
 
 for Linux the line could read (and does on ubuntu)
 
 ```
-172.17.0.1 docker
+172.17.0.1 localdocker
 ```
 
 But since on ubuntu a bridging network is configured, you could use `localhost` too as the address to visit your application.
