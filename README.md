@@ -105,7 +105,7 @@ Add the following configuration to this file:
     <profile>
       <id>wildfly-remote</id>
       <properties>      
-        <wildfly-hostname>docker</wildfly-hostname>
+        <wildfly-hostname>localhost</wildfly-hostname>
         <wildfly-port>9990</wildfly-port>
         <wildfly-username>admin</wildfly-username>
         <wildfly-password>Admin#70365</wildfly-password>
@@ -115,6 +115,9 @@ Add the following configuration to this file:
 
 </settings>
 ```
+
+You can leave the host in the deployment profile set to localhost, because in typically map the wildfly admin port to a localhost port in the bridge network setup.
+
 
 ## Deploy Application
 After that, you can deploy the helloworld web app to your Wildfly server. Execute the following command in your maven project.
