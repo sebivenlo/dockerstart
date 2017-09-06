@@ -190,7 +190,7 @@ You can make this a litle more intuitive by adding the line
 `
 cat 172.17.0.1 	localdocker.local localdocker
 `
- to your `/etc/hosts` file, which allows you to addres the docker damon with a name. I used to use *docker* as name, but this proved to be awkward, because every time I entered docker into the chrome url box, it tried to connect to my docker instead of to google, which is my intent most of the time.
+ to your `/etc/hosts` file, which allows you to addres the docker dmon with a name. I used to use *docker* as name, but this proved to be awkward, because every time I entered docker into the chrome url box, it tried to connect to my docker instead of to google, which is my intent most of the time.
 
 
 ## Windows and MacOS
