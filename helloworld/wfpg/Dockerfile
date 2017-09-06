@@ -27,7 +27,7 @@ ADD batch.cli /tmp/
 
 # Set up modules
 RUN /tmp/config.sh
-RUN $JBOSS_HOME/bin/add-user.sh admin Admin#70365 --silent
+##RUN $JBOSS_HOME/bin/add-user.sh admin Admin#70365 --silent
 
 # Use the modules
 ##ADD standalone.xml /opt/jboss/wildfly/standalone/configuration/

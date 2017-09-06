@@ -6,7 +6,7 @@ networks:
 
 services:
   app-web:
-    build: ./wfpg
+    build: ./web
     ports:
       - "8011:8080"
       - "9990:9990"

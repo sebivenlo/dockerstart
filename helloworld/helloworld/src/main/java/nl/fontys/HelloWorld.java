@@ -1,43 +1,32 @@
 package nl.fontys;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
+import javax.ejb.EJB;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.sql.DataSource;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 
-@ManagedBean( name = "helloWorld", eager = true )
+/**
+ * Demo of using a EJB class to produce data.
+ * Typically youe application has a thin (simple) controller class, that can be
+ * accessed by a configurable name (helloworld in ths case). The work is done by
+ * Enterprise Java Beans, Oracle n this case.
+ *
+ * @author EricSoldierer
+ * @author Pieter van den Hombergh {@code <p.vandenhombergh@fontys.nl>}
+ */
 @SessionScoped
+@Named( "helloWorld" )
 public class HelloWorld implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Resource( lookup = "java:/jdbc/dockerds" )
-    DataSource ds;
+    @EJB
+    Oracle oracle;
 
     public List<String> getMessages() {
-
-        String query = "SELECT * FROM awesomeTable";
-        List<String> records = new ArrayList<>();
-        try ( Connection con = ds.getConnection();
-                PreparedStatement ps = con.prepareStatement( query ); ) {
-            ps.execute();
-            try ( ResultSet rs = ps.getResultSet(); ) {
-                while ( rs.next() ) {
-                    records.add( rs.getString( 2 ) );
-                }
-            }
-        } catch ( SQLException ex ) {
-            Logger.getLogger( HelloWorld.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        return records;
+        List<String> result = oracle.getMessages();
+        result.add( 0, "using oracle" ); // make sure we are using the oracle.
+        return result;
     }
 }

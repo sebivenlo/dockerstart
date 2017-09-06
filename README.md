@@ -20,20 +20,20 @@ Anyhow, on my machine, the docker0 ip address in 172.17.0.1, one can resolve thi
 Windows makes things complicated, First make sure you're running a windows 10 Pro edition, otherwise you will need to setup an VM for an Unix environment. Then install Docker from Docker.com.
 
 Clone the repository and open powershell inside the ~\dockerstart\helloworld.
-run the following command: 
+run the following command:
 ```cmd
-Docker-compose build 
+Docker-compose build
 docker-compose up -d
 ```
 install maven if needed : https://www.mkyong.com/maven/how-to-install-maven-in-windows/ (tutorial)
 
-navigate to ~/dockerstart\helloworld\helloworld and run 
+navigate to ~/dockerstart\helloworld\helloworld and run
 ```cmd
-mvn wildfly:deploy -P wildfly-remote 
+mvn wildfly:deploy -P wildfly-remote
 ```
 this will deploy the application to the wilfdly. (make sure JDK refference in environment path is correct)
 
-log in using Usernname: admin 
+log in using Usernname: admin
              Password: Admin#70365
 ```cmd
 docker run -d -p 8080:8080 --name HelloWorld Helloworld_app-web
@@ -74,7 +74,10 @@ Afterwards, the docker machine can be accessed under `http://docker:port`.
 Note that 192.168.0.0/16 and 172.16.0.0/12 are both so called private networks and should not be used on the real internet. It is okay to use them inside a host or on a private net (typically applying NAT).
 
 # Docker Compose to Link Containers
-This `helloworld` application consists of two containers. One representing the database, and the other the application server. To start up both of them, execute the following command in the folder where the `docker-compose.yml` file is located.
+This `helloworld` application consists of two containers and one image.
+Th immage, `wfpg` is a wildfly with an installed postgresql jdb driver. Purpose: If it is in the image, you can avoid deploying the jdbc driver.
+
+Of the containers one represents the database, and is calls `app-db`. The  other the application server name `app-web`. To start up both of them, execute the command below in the folder where the `docker-compose.yml` file is located.
 
 ```bash
 docker-compose up -d
@@ -82,16 +85,18 @@ docker-compose up -d
 
 Now, you should be able to connect to the Wildfy server via `http://docker:8011` in your browser.
 
+Note that the `app-web` container does NOT yet have the application, a Java project. That is covered in the next section.
+
 
 # Wildfly and Maven
 When you develop an application that is supposed to run on a server, you will somehow have to deploy it. While manual deployment is possible, it is very time consuming. Luckily, Maven can assist us with this process.
 
-There is a [Maven plugin](https://docs.jboss.org/wildfly/plugins/maven/latest/) to deploy applications onto a Wildfly container. For other application containers, similar Maven plugins exist.
+There is a [Maven plugin](https://docs.jboss.org/wildfly/plugins/maven/latest/) to deploy applications onto a Wildfly container. For other application containers, such as glassfish or payara, a similar Maven plugins exist.
 
 Following is a brief description of how to setup this plugin, and how to deploy the application to Wildfly.
 
 ## Plugin Configuration
-Since the configuration parameter like the ip address, the username and/or the password usually differ from user to user, these parameters should be configured per user. This can be done in the global maven configuration. On Unix, this file is located under `~/.m2/settings.xml`. On Windows it can be found at `%USER_PROFILE%\.m2\settings.xml`.
+Since the configuration parameter like the ip address, the username and/or the password usually differ from user to user, these parameters should be configured per user. This can be done in the global maven configuration. On Unix (Linux, OSX), this file is located under `~/.m2/settings.xml`. On Windows it can be found at `%USER_PROFILE%\.m2\settings.xml`.
 
 Add the following configuration to this file:
 
@@ -172,7 +177,7 @@ When opening the `add Docker` promt in the docker service, there is already a pr
 
 ## Linux
 
-After the demo by MarvinRuesenberg on how to connect the netbeans docker client, homberghp investigated a little further. The following was necessary to get it working on an Ubuntu installation:
+After the demo by MarvinRuesenberg on how to connect the netbeans docker client, homberghp investigated a little further. The following was seemed to get it working on an Ubuntu installation:
 
 In the file
 
@@ -181,16 +186,17 @@ In the file
 add or change the line
 
 ```
-DOCKER_OPTS="-H fd:// -H tcp://172.17.0.1:2375 --dns <your-local-dns> --dns 8.8.8.8 --dns 8.8.4.4"`
+DOCKER_OPTS="-H fd:// -H tcp://127.0.0.1:2375 --dns <your-local-dns> --dns 8.8.8.8 --dns 8.8.4.4"`
 ```
 after changing the test `<your-local-dns>` to the actual dns for you local connections.
-Lastly, in your `~/.bashrc`, add
 
-`export DOCKER_HOST=tcp://172.17.0.1:2375`
+Now you can access the docker daemon using the default file descriptor protocol (fd://) as well as via a network connection via localhost (tcp://127.0.0.1), to be used by Java and netbeans.
+
+To keep this working, even after a Linux restart, doe the following:
 
 Create a new directory under `/etc/systemd/system/docker.service.d` with
 
-`mkdir -p etc/systemd/system/docker.service.d` 
+`mkdir -p etc/systemd/system/docker.service.d`
 
 and add a file named `overlay.conf` with the contents
 
@@ -199,11 +205,14 @@ and add a file named `overlay.conf` with the contents
 # workaround to include default options
 EnvironmentFile=/etc/default/docker   
 ExecStart=
-ExecStart=/usr/bin/dockerd $DOCKER_OPTS -s overlay2 
+ExecStart=/usr/bin/dockerd $DOCKER_OPTS -s overlay2
 ```
 
+The of the file is not relevant, as long as it ens in `.conf`. I chose overlay, because the configuration file also selects the overlay2 driver for the docker file systems.
+
+
 This file, because of its location and extension, will be automatically loaded by the _systemd_ system and
-will setup the docker service with tcp connections and the (faster) overlay2 persistense layer driver. Currently overlay2 is the advised driver for docker on ubuntu and tested on xenial. 
+will setup the docker service with tcp connections and the (faster) overlay2 persistense layer driver. Currently (2017-09-06) overlay2 is the advised driver for docker on ubuntu and tested on xenial.
 
 Notice that changing the persistence driver from the default (aufs) will make any previous images no longer accessible.
 You may want to keep those, by changing the text `-s overlay2`  to `-s aufs` in the snippet above.
@@ -213,12 +222,11 @@ You can connect and command docker from both services, one being the netbeans se
 
 By doing the above, we are opening an actual network tcp-socket that netbeans is able to address.
 
-You can make this a litle more intuitive by adding the line 
-`
-cat 172.17.0.1 	localdocker.local localdocker
-`
- to your `/etc/hosts` file, which allows you to addres the docker dmon with a name. I used to use *docker* as name, but this proved to be awkward, because every time I entered docker into the chrome url box, it tried to connect to my docker instead of to google, which is my intent most of the time.
-
+You can make this a litle more intuitive by adding the line
+```
+172.17.0.1 	localdocker.local localdocker
+```
+ to your `/etc/hosts` file, which allows you to addres the docker daemon with a name.
 
 ## Windows and MacOS
 
