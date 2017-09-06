@@ -1,12 +1,22 @@
-app-web:
-  build: ./web
-  ports:
-    - "8011:8080"
-    - "9990:9990"
-  links:
-    - app-db
+version: '2'
 
-app-db:
-  build: ./db
-  ports:
-    - "5433:5432"
+networks:
+  appnetwork:
+     driver: bridge
+
+services:
+  app-web:
+    build: ./wfpg
+    ports:
+      - "8011:8080"
+      - "9990:9990"
+    networks:
+      - appnetwork
+    depends_on:
+      - app-db
+  app-db:
+    build: ./db
+    ports:
+      - "5433:5432"
+    networks:
+      - appnetwork

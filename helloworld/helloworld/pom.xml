@@ -25,11 +25,13 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.4.1212.jre7</version>
+            <version>42.1.4</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>helloworld</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

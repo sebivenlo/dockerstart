@@ -3,8 +3,8 @@ CREATE DATABASE docker;
 \c docker
 
 CREATE TABLE awesomeTable (
-	id INT PRIMARY KEY NOT NULL,
-	value TEXT NOT NULL
+	id serial PRIMARY KEY,
+	message text NOT NULL
 );
 
-INSERT INTO awesomeTable VALUES (1, 'Hello'), (2, 'World');
+INSERT INTO awesomeTable (message) VALUES ('Hello'), ('World');
