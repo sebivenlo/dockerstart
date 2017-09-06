@@ -4,6 +4,7 @@ getting on the same level with docker.
 * [EricSoldierer](https://github.com/EricSoldierer) and [paulvv007](https://github.com/paulvv007)  added the hello world docker composer app, consisting of a persistence part and a web part.
 * [jantrienes](https://github.com/jantrienes) and [holgerkemper](https://github.com/holgerkemper) added instructions and configuration of how to deploy the application with Maven to Wildfly.
 * [MarvinRuesenberg](https://github.com/MarvinRuesenberg) added instructions on how you  connect Netbeans with your Docker machine.
+* [HermLecluse](https://github.com/HermLecluse) added instructions on how you setup Docker in windows.
 
 [homberghp](https://github.com/homberghp): Please build war yourselves. It does not belong in a repository anyway, and you will have a go with maven.
 
@@ -16,7 +17,30 @@ Somehow, things under Linux are a bit harder, mostly because linux does not requ
 Anyhow, on my machine, the docker0 ip address in 172.17.0.1, one can resolve this in the `hosts` file, see below.
 
 ## Windows
+Windows makes things complicated, First make sure you're running a windows 10 Pro edition, otherwise you will need to setup an VM for an Unix environment. Then install Docker from Docker.com.
 
+Clone the repository and open powershell inside the ~\dockerstart\helloworld.
+run the following command: 
+```cmd
+Docker-compose build 
+docker-compose up -d
+```
+install maven if needed : https://www.mkyong.com/maven/how-to-install-maven-in-windows/ (tutorial)
+
+navigate to ~/dockerstart\helloworld\helloworld and run 
+```cmd
+mvn wildfly:deploy -P wildfly-remote 
+```
+this will deploy the application to the wilfdly. (make sure JDK refference in environment path is correct)
+
+log in using Usernname: admin 
+             Password: Admin#70365
+```cmd
+docker run -d -p 8080:8080 --name HelloWorld Helloworld_app-web
+```
+browse to : //localhost:8011/helloworld/
+
+Congratulations you're up and running
 ## macOS
 Start your docker machine and establish a connection to it:
 ``` bash
