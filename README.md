@@ -19,7 +19,7 @@ Anyhow, on my machine, the docker0 ip address in 172.17.0.1, one can resolve thi
 ## Windows
 Windows makes things complicated, First make sure you're running a windows 10 Pro edition, otherwise you will need to setup an VM for an Unix environment. Then install Docker from Docker.com.
 
-Clone the repository and open powershell inside the ~\dockerstart\helloworld.
+Clone the repository and open powershell inside the ~/dockerstart/helloworld.
 run the following command:
 ```cmd
 Docker-compose build
@@ -27,7 +27,7 @@ docker-compose up -d
 ```
 install maven if needed : https://www.mkyong.com/maven/how-to-install-maven-in-windows/ (tutorial)
 
-navigate to ~/dockerstart\helloworld\helloworld and run
+navigate to ~/dockerstart/helloworld/helloworld and run
 ```cmd
 mvn wildfly:deploy -P wildfly-remote
 ```
